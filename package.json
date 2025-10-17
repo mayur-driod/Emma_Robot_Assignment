@@ -1,8 +1,8 @@
 {
   "name": "emma-robot-assignment",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
+  "description": "A project for scraping data, processing it, and pushing to HubSpot",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "ts-node src/index.ts",
@@ -26,6 +26,7 @@
   "homepage": "https://github.com/mayur-driod/Emma_Robot_Assignment#readme",
   "devDependencies": {
     "@types/node": "^24.8.1",
+    "@types/unzipper": "^0.10.11",
     "sequelize-cli": "^6.6.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
@@ -34,8 +35,10 @@
     "axios": "^1.12.2",
     "csv-parse": "^6.1.0",
     "dotenv": "^17.2.3",
+    "fs": "^0.0.1-security",
     "mysql2": "^3.15.2",
     "playwright": "^1.56.1",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "unzipper": "^0.12.3"
   }
 }
