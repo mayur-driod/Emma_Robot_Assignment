@@ -1,2 +1,7 @@
-let message: String = "Hello world";
-console.log(message);
+import scrape from "./scraper/kaggleScraper"
+
+const run = async () => {
+    scrape();
+}
+
+run();
