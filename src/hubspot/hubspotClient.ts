@@ -15,7 +15,7 @@ export async function sendToHubspot(name: string, sex: string): Promise<any> {
       {
         properties: {
           firstname: name,
-          gender: sex
+          sex: sex
         }
       },
       {
