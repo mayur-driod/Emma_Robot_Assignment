@@ -1,10 +1,11 @@
 import dotenv from "dotenv";
 import dbConnect from "./db/dbConnect";
 import sequelize from "./db/sequelize";
-import { testHubspotConnection } from "./hubspot/hubspotClient";
+import { sendBatchToHubspot, testHubspotConnection } from "./hubspot/hubspotClient";
 import scrape from "./scraper/kaggleScraper";
 import parseCSVFile from "./utils/csv";
 import csvToDb from "./processors/csvToDb";
+import { BabyName } from "./db/models/BabyName";
 
 dotenv.config();
 
@@ -38,11 +39,29 @@ const main = async () => {
       console.log("CSV data parsed!");
 
       console.log("Uploading to database");
-      csvToDb(parsedData);
+      await csvToDb(parsedData);
+
+   let hubspotResult = { success: 0, failed: 0, skipped: 0 };
+
+      if (connected) {
+      console.log("Fetching data");
+      const fetchedData = await BabyName.findAll();
+      console.log('\nStep 7: Syncing data to HubSpot...');
+      const plainData = fetchedData.map(b => b.get({ plain: true }));
+      hubspotResult = await sendBatchToHubspot(plainData);
+    } else {
+      console.log('Step 7: Skipping HubSpot sync (API connection failed)');
+      console.log('Update HUBSPOT_ACCESS_TOKEN in .env to enable HubSpot sync');
+    }
    }
    catch(err){
       console.log(err);
+      process.exit(1);
    }
+   finally {
+    await sequelize.close();
+    console.log('Database connection closed');
+  }
 
 }
 

@@ -27,7 +27,6 @@ const csvToDb = async (records:Array<Record<string, string>>) => {
     }
 
    console.log('Done inserting records');
-   await sequelize.close();
 }
 
 export default csvToDb;
