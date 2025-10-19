@@ -45,8 +45,8 @@ const main = async () => {
 
       if (connected) {
       console.log("Fetching data");
-      const fetchedData = await BabyName.findAll();
-      console.log('\nStep 7: Syncing data to HubSpot...');
+      const fetchedData = await BabyName.findAll({limit:100});
+      console.log('Step 7: Syncing data to HubSpot...');
       const plainData = fetchedData.map(b => b.get({ plain: true }));
       hubspotResult = await sendBatchToHubspot(plainData);
     } else {

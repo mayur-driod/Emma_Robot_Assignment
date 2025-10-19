@@ -8,10 +8,11 @@ const csvToDb = async (records:Array<Record<string, string>>) => {
     const nameKey = 'Name'
     const sexKey = "Sex"
 
-    const limit = 100;
-    const data = records.slice(0,limit);
+    // const limit = 100;
+    // const data = records.slice(0,limit);
+    let count = 0;
 
-    for( const r of data){
+    for( const r of records){
         const name = r[nameKey]?.trim();
         let sex = r[sexKey]?.trim().toUpperCase();
 
@@ -21,12 +22,13 @@ const csvToDb = async (records:Array<Record<string, string>>) => {
 
         try {
             await BabyName.create({ name, sex });
+            count++;
         } catch (err) {
             console.error('DB insert error for', name, err);
         }
     }
 
-   console.log('Done inserting records');
+   console.log(`Done inserting ${count} records`);
 }
 
 export default csvToDb;
