@@ -5,13 +5,13 @@ import { BabyName } from '../db/models/BabyName';
 import sequelize from '../db/sequelize';
 
 const csvToDb = async (records:Array<Record<string, string>>) => {
-    await sequelize.authenticate();
-    await BabyName.sync();
-
     const nameKey = 'Name'
     const sexKey = "Sex"
 
-    for( const r of records){
+    const limit = 100;
+    const data = records.slice(0,limit);
+
+    for( const r of data){
         const name = r[nameKey]?.trim();
         let sex = r[sexKey]?.trim().toUpperCase();
 
@@ -29,3 +29,5 @@ const csvToDb = async (records:Array<Record<string, string>>) => {
    console.log('Done inserting records');
    await sequelize.close();
 }
+
+export default csvToDb;
