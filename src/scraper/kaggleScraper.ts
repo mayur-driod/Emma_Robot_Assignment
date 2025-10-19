@@ -21,7 +21,7 @@ const scrape = async () => {
 
     fs.mkdirSync(DOWNLOAD_DIR, { recursive: true }); //
 
-    const browser = await chromium.launch({headless: false}); // headless for testing.
+    const browser = await chromium.launch({headless: true}); // headless for testing.
     const context = await browser.newContext({acceptDownloads:true});
     const page = await context.newPage();
 
